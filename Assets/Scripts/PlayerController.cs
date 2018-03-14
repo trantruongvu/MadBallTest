@@ -2,24 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(PlayerMotor))]
 public class PlayerController : MonoBehaviour {
 
     [SerializeField]
     private float walkSpeed = 5f;
+
     [SerializeField]
     private float runSpeed = 7f;
 
+    [SerializeField]
+    public Camera cam;
+
     private Quaternion targetRotation;
     private float rotationSpeed = 1500f;
-
     private CharacterController controller;
-    private Camera cam;
 
     void Start ()
     {
         controller = GetComponent<CharacterController>();
-        cam = Camera.main;
+        //cam = Camera.main;
     }
 
     void Update ()
