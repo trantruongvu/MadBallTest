@@ -5,12 +5,14 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerMotor : MonoBehaviour {
 
-    private Rigidbody rgbd;
+    //private Rigidbody rgbd;
+    private CharacterController controller;
     private Vector3 velocity = Vector3.zero;
 
     void Start ()
     {
-        rgbd = GetComponent<Rigidbody>();
+        //rgbd = GetComponent<Rigidbody>();
+        controller = GetComponent<CharacterController>();
     }
 
     // Run every physics iteration
@@ -29,7 +31,8 @@ public class PlayerMotor : MonoBehaviour {
     {
         if (velocity != Vector3.zero)
         {
-            rgbd.MovePosition(rgbd.position + velocity * Time.fixedDeltaTime);
+            //rgbd.MovePosition(rgbd.position + velocity * Time.fixedDeltaTime);
+            controller.Move(velocity * Time.deltaTime);
         }
     }
 }
