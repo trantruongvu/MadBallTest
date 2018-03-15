@@ -4,6 +4,24 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
+    // singleton
+    public static GameController instance;
+
+    public MatchSetting matchSetting;
+
+    void Awake ()
+    {
+        if (instance != null)
+        {
+            Debug.Log("More than one GameController");
+        }
+        else
+        {
+            instance = this;
+        }
+    }
+
+    #region Player Tracking
 
     private const string PLAYER_ID_PREFIX = "Player";
     private static Dictionary<string, Player> players = new Dictionary<string, Player>();
@@ -42,4 +60,8 @@ public class GameController : MonoBehaviour
     //    GUILayout.EndVertical();
     //    GUILayout.EndArea();
     //}
+
+    #endregion
+
+
 }

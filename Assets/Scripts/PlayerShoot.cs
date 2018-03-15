@@ -47,6 +47,6 @@ public class PlayerShoot : NetworkBehaviour
 
         // Player take Damage
         Player _player = GameController.GetPlayer(_playerID);
-        _player.TakeDamage(_damage);
+        _player.RpcTakeDamage(_damage);
     }
 }

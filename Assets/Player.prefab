@@ -56,12 +56,12 @@ GameObject:
   m_Component:
   - component: {fileID: 4580421165360980}
   - component: {fileID: 54313788400399660}
-  - component: {fileID: 114717505910119252}
-  - component: {fileID: 143140344660504932}
   - component: {fileID: 114802823966998254}
-  - component: {fileID: 114953302651804600}
   - component: {fileID: 114382240449186446}
   - component: {fileID: 65021418961969578}
+  - component: {fileID: 143140344660504932}
+  - component: {fileID: 114717505910119252}
+  - component: {fileID: 114953302651804600}
   - component: {fileID: 114871692889967146}
   - component: {fileID: 114003310355759614}
   m_Layer: 10
@@ -336,6 +336,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
+  disableOnDeath:
+  - {fileID: 114717505910119252}
+  - {fileID: 114871692889967146}
 --- !u!114 &114095865577817004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -428,7 +431,7 @@ MonoBehaviour:
   barrel: {fileID: 1802219952603586}
   mask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4294966271
   weapon:
     Name: Glock
     Damage: 10

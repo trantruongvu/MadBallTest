@@ -12,12 +12,9 @@ public class PlayerSetup : NetworkBehaviour {
     private string remoteLayerName = "RemotePlayer";
 
     private Camera sceneCamera;
-    private Rigidbody rb;
 
     void Start ()
     {
-        rb = GetComponent<Rigidbody>();
-
         if (!isLocalPlayer)
         {
             DisableComponents();
@@ -31,6 +28,8 @@ public class PlayerSetup : NetworkBehaviour {
                 sceneCamera.gameObject.SetActive(false);
             }
         }
+        // Setup player
+        GetComponent<Player>().Setup();
     }
 
     public override void OnStartClient()
