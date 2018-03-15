@@ -113,6 +113,63 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &104649909
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4580421165360980, guid: ff3bd859bf5a08647a344d947643ad86, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4580421165360980, guid: ff3bd859bf5a08647a344d947643ad86, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4580421165360980, guid: ff3bd859bf5a08647a344d947643ad86, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4580421165360980, guid: ff3bd859bf5a08647a344d947643ad86, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4580421165360980, guid: ff3bd859bf5a08647a344d947643ad86, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4580421165360980, guid: ff3bd859bf5a08647a344d947643ad86, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4580421165360980, guid: ff3bd859bf5a08647a344d947643ad86, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4580421165360980, guid: ff3bd859bf5a08647a344d947643ad86, type: 2}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 153071056737491344, guid: ff3bd859bf5a08647a344d947643ad86,
+        type: 2}
+      propertyPath: m_ConnectedAnchor.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 54313788400399660, guid: ff3bd859bf5a08647a344d947643ad86,
+        type: 2}
+      propertyPath: m_Drag
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 153071056737491344, guid: ff3bd859bf5a08647a344d947643ad86,
+        type: 2}
+      propertyPath: m_YDrive.positionSpring
+      value: 50
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: ff3bd859bf5a08647a344d947643ad86, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &220440695
 GameObject:
   m_ObjectHideFlags: 0
