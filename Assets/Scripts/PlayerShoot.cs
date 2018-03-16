@@ -13,13 +13,8 @@ public class PlayerShoot : NetworkBehaviour
     [SerializeField]
     private LayerMask mask;
 
-    public LineRenderer tracer;
-    public PlayerWeapon weapon;
-
-    void Start ()
-    {
-        tracer = GetComponentInChildren<LineRenderer>();
-    }
+    [SerializeField]
+    private PlayerWeapon weapon;
 
     void Update ()
     {

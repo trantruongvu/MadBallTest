@@ -5,7 +5,6 @@ using UnityEngine;
 public class CrossHair : MonoBehaviour {
 
     public Texture2D crosshairImage;
-    Vector2 mousePos;
 
     void OnGUI()
     {
@@ -13,10 +12,5 @@ public class CrossHair : MonoBehaviour {
         float xMin = Screen.width - (Screen.width - Input.mousePosition.x) - (crosshairImage.width / 2);
         float yMin = (Screen.height - Input.mousePosition.y) - (crosshairImage.height / 2);
         GUI.DrawTexture(new Rect(xMin, yMin, crosshairImage.width, crosshairImage.height), crosshairImage);
-    }
-
-    void Update ()
-    {
-        mousePos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
     }
 }
