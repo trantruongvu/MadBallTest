@@ -227,6 +227,7 @@ GameObject:
   - component: {fileID: 114266009456599904}
   - component: {fileID: 114687757438579192}
   - component: {fileID: 114054754659904080}
+  - component: {fileID: 114380126322160408}
   m_Layer: 10
   m_Name: Player
   m_TagString: Player
@@ -804,7 +805,20 @@ MonoBehaviour:
   - {fileID: 20529984212934464}
   - {fileID: 81736645863141892}
   - {fileID: 114687757438579192}
+  - {fileID: 114380126322160408}
   remoteLayerName: RemotePlayer
+--- !u!114 &114380126322160408
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1883814194778320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b3eef04697829f478677168f083f4b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  crosshairImage: {fileID: 2800000, guid: f97bc9b1e37b5c8448d57f5df083c4a2, type: 3}
 --- !u!114 &114644826967110664
 MonoBehaviour:
   m_ObjectHideFlags: 1

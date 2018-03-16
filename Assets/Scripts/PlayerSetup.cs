@@ -61,6 +61,7 @@ public class PlayerSetup : NetworkBehaviour {
     {
         if (sceneCamera != null)
         {
+            Cursor.visible = true;
             sceneCamera.gameObject.SetActive(true);
         }
         // Register player
