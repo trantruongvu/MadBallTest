@@ -113,62 +113,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1001 &214876105
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4364477321323896, guid: ee55a7ef50ff723409ef6197b87c03c1, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4364477321323896, guid: ee55a7ef50ff723409ef6197b87c03c1, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4364477321323896, guid: ee55a7ef50ff723409ef6197b87c03c1, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4364477321323896, guid: ee55a7ef50ff723409ef6197b87c03c1, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4364477321323896, guid: ee55a7ef50ff723409ef6197b87c03c1, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4364477321323896, guid: ee55a7ef50ff723409ef6197b87c03c1, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4364477321323896, guid: ee55a7ef50ff723409ef6197b87c03c1, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4364477321323896, guid: ee55a7ef50ff723409ef6197b87c03c1, type: 2}
-      propertyPath: m_RootOrder
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 114687757438579192, guid: ee55a7ef50ff723409ef6197b87c03c1,
-        type: 2}
-      propertyPath: weapon.Name
-      value: M4A1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114687757438579192, guid: ee55a7ef50ff723409ef6197b87c03c1,
-        type: 2}
-      propertyPath: weapon.Damage
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 1623277320332850, guid: ee55a7ef50ff723409ef6197b87c03c1, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: ee55a7ef50ff723409ef6197b87c03c1, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1 &220440695
 GameObject:
   m_ObjectHideFlags: 0
@@ -522,7 +466,7 @@ MonoBehaviour:
   m_ScriptCRCCheck: 1
   m_MaxDelay: 0.01
   m_LogLevel: 2
-  m_PlayerPrefab: {fileID: 1883814194778320, guid: ee55a7ef50ff723409ef6197b87c03c1,
+  m_PlayerPrefab: {fileID: 1375448211056258, guid: 9d267d3316f6fd94f8032f69e36670c3,
     type: 2}
   m_AutoCreatePlayer: 1
   m_PlayerSpawnMethod: 1
