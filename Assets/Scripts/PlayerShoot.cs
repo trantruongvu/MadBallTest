@@ -46,11 +46,50 @@ public class PlayerShoot : NetworkBehaviour
 
     }
 
+    // Called on server when a Player shoots
+    [Command]
+    void CmdOnShoot ()
+    {
+        RpcDoShootEffect();
+    }
+
+    // Is called on all Clients to display Shoot Effect
+    [ClientRpc]
+    void RpcDoShootEffect ()
+    {
+        //Debug.Log("Player shoot Graphics: " + weaponController.GetCurrentGraphics().name);
+        weaponController.GetCurrentGraphics().muzzleFlash.Play();
+    }
+
+    // Called on server when a Player hit something
+    // take in hit position (point) and hit surface (normal)
+    [Command]
+    void CmdOnHit(Vector3 _pos, Vector3 _normal)
+    {
+        RpcDoHitEffect(_pos, _normal);
+    }
+
+    // Is called on all Clients to display Hit effect
+    [ClientRpc]
+    void RpcDoHitEffect(Vector3 _pos, Vector3 _normal)
+    {
+        GameObject _hitEffect =  Instantiate(weaponController.GetCurrentGraphics().hitEffectPrefab, _pos, Quaternion.LookRotation(_normal));
+        Destroy(_hitEffect, 1f);
+    }
+
     [Client]
     void Shoot ()
     {
-        Vector3 forward = muzzlePoint.transform.TransformDirection(Vector3.forward) * 10;
-        Debug.DrawRay(muzzlePoint.transform.position, forward, Color.cyan, 2f);
+        if (!isLocalPlayer)
+        {
+            return;
+        }
+
+        // Shooting
+        CmdOnShoot();
+
+        //Vector3 forward = muzzlePoint.transform.TransformDirection(Vector3.forward) * 10;
+        //Debug.DrawRay(muzzlePoint.transform.position, forward, Color.cyan, 2f);
 
         Ray ray = new Ray (muzzlePoint.transform.position, muzzlePoint.transform.forward);
         RaycastHit _hit;
@@ -59,8 +98,12 @@ public class PlayerShoot : NetworkBehaviour
         {
             if (_hit.collider.tag == PLAYER_TAG)
             {
+                //  Player got shot
                 CmdPlayerGotShot(_hit.collider.name, currentWeapon.Damage);
             }
+
+            // Hitting something -> Call onHit on server
+            CmdOnHit(_hit.point, _hit.normal);
         }
     }
 

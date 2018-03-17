@@ -20,7 +20,6 @@ public class PlayerController : MonoBehaviour {
     void Start ()
     {
         controller = GetComponent<CharacterController>();
-        //cam = Camera.main;
     }
 
     void Update ()
