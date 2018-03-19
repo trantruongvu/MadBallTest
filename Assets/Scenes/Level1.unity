@@ -604,6 +604,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   matchSetting:
     RespawnTime: 5
+  sceneCamera: {fileID: 1443522282}
 --- !u!4 &1354924739
 Transform:
   m_ObjectHideFlags: 0

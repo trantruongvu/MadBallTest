@@ -18,6 +18,13 @@ public class Player : NetworkBehaviour {
     private Behaviour[] disableOnDeath;
     private bool[] wasEnabled;
 
+    [SerializeField]
+    private GameObject spawnEffect;
+    [SerializeField]
+    private GameObject deathEffect;
+    [SerializeField]
+    private GameObject[] disableGameObjectOnDeath;
+
     [SyncVar]
     private bool _isDead = false;
     public bool isDead
@@ -53,22 +60,6 @@ public class Player : NetworkBehaviour {
         }
     }
 
-    private void SetDefault()
-    {
-        isDead = false;
-        for (int i = 0; i < disableOnDeath.Length; i++)
-        {
-            disableOnDeath[i].enabled = wasEnabled[i];
-        }
-        Collider _col = GetComponent<Collider>();
-        if (_col != null)
-        {
-            _col.enabled = true;
-        }
-
-        currentHealth = maxHealth;
-    }
-
     [ClientRpc]
     public void RpcTakeDamage (int _damage)
     {
@@ -88,29 +79,79 @@ public class Player : NetworkBehaviour {
     {
         isDead = true;
         rigidbd.useGravity = false;
+        // Disable components
         for (int i = 0; i < disableOnDeath.Length; i++)
         {
             disableOnDeath[i].enabled = false;
         }
+        // Disable gameObjects
+        for (int i = 0; i < disableGameObjectOnDeath.Length; i++)
+        {
+            disableGameObjectOnDeath[i].SetActive(false);
+        }
+        // Disable collider
         Collider _col = GetComponent<Collider>();
         if (_col != null)
         {
             _col.enabled = false;
         }
 
-        Debug.Log(transform.name + " is dead.");
+        // Switch camera
+        if (isLocalPlayer)
+        {
+            GameController.instance.SetSceneCameraActive(true);
+        }
 
+        // Spawn Death Effect
+        GameObject _gfxIns = Instantiate(deathEffect, transform.position, Quaternion.identity);
+        Destroy(_gfxIns, 4f);
+
+        Debug.Log(transform.name + " is dead.");
         StartCoroutine(ReSpawn());
 
+    }
+
+    private void SetDefault()
+    {
+        isDead = false;
+        currentHealth = maxHealth;
+
+        // Enable Components
+        for (int i = 0; i < disableOnDeath.Length; i++)
+        {
+            disableOnDeath[i].enabled = wasEnabled[i];
+        }
+        // Enable gameObjects
+        for (int i = 0; i < disableGameObjectOnDeath.Length; i++)
+        {
+            disableGameObjectOnDeath[i].SetActive(true);
+        }
+        // Enable Collider
+        Collider _col = GetComponent<Collider>();
+        if (_col != null)
+        {
+            _col.enabled = true;
+        }
+
+        // Switch camera
+        if (isLocalPlayer)
+        {
+            GameController.instance.SetSceneCameraActive(false);
+        }
+
+        // Create spawn effect
+        GameObject _gfxIns = Instantiate(spawnEffect, transform.position, Quaternion.identity);
+        Destroy(_gfxIns, 4f);
     }
 
     private IEnumerator ReSpawn ()
     {
         yield return new WaitForSeconds(GameController.instance.matchSetting.RespawnTime);
 
-        SetDefault();
         Transform _spawnPoint = NetworkManager.singleton.GetStartPosition();
         transform.position = _spawnPoint.position;
         transform.rotation = _spawnPoint.rotation;
+
+        SetDefault();
     }
 }

@@ -56,16 +56,13 @@ public class PlayerSetup : NetworkBehaviour {
         }
     }
 
-    // Re-Enable Scene Camera
+    
     void OnDisable ()
     {
-        if (sceneCamera != null)
-        {
-            Cursor.visible = true;
-            sceneCamera.gameObject.SetActive(true);
-        }
+        // Re-Enable Scene Camera
+        GameController.instance.SetSceneCameraActive(true);
         // Register player
-        //GameController.DeRegisterPlayer(transform.name);
+        GameController.DeRegisterPlayer(transform.name);
     }
 
 }
