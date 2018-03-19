@@ -11,13 +11,18 @@ public class PlayerShoot : NetworkBehaviour
     private WeaponController weaponController;
 
     [SerializeField]
+    private LineRenderer shotTracer;
+    [SerializeField]
     private LayerMask mask;
     [SerializeField]
     private GameObject muzzlePoint;
+    [SerializeField]
+    private Transform spawnTracer;
 
     void Start ()
     {
         weaponController = GetComponent<WeaponController>();
+        shotTracer = GetComponent<LineRenderer>();
     }
 
     void Update ()
@@ -48,17 +53,18 @@ public class PlayerShoot : NetworkBehaviour
 
     // Called on server when a Player shoots
     [Command]
-    void CmdOnShoot ()
+    void CmdOnShoot (Vector3 _hitpoint)
     {
-        RpcDoShootEffect();
+        RpcDoShootEffect(_hitpoint);
     }
 
     // Is called on all Clients to display Shoot Effect
     [ClientRpc]
-    void RpcDoShootEffect ()
+    void RpcDoShootEffect (Vector3 _hitPoint)
     {
-        //Debug.Log("Player shoot Graphics: " + weaponController.GetCurrentGraphics().name);
         weaponController.GetCurrentGraphics().muzzleFlash.Play();
+        // Render tracer
+        StartCoroutine("RenderTracer", _hitPoint);
     }
 
     // Called on server when a Player hit something
@@ -85,14 +91,11 @@ public class PlayerShoot : NetworkBehaviour
             return;
         }
 
-        // Shooting
-        CmdOnShoot();
-
-        //Vector3 forward = muzzlePoint.transform.TransformDirection(Vector3.forward) * 10;
-        //Debug.DrawRay(muzzlePoint.transform.position, forward, Color.cyan, 2f);
+        
 
         Ray ray = new Ray (muzzlePoint.transform.position, muzzlePoint.transform.forward);
         RaycastHit _hit;
+        float shotDistance = 15f;
 
         if (Physics.Raycast(ray, out _hit, currentWeapon.Range, mask))
         {
@@ -101,10 +104,23 @@ public class PlayerShoot : NetworkBehaviour
                 //  Player got shot
                 CmdPlayerGotShot(_hit.collider.name, currentWeapon.Damage);
             }
-
+            shotDistance = _hit.distance;
             // Hitting something -> Call onHit on server
             CmdOnHit(_hit.point, _hit.normal);
         }
+
+        // Shooting
+        CmdOnShoot(ray.direction * shotDistance);
+    }
+
+
+    IEnumerator RenderTracer(Vector3 shotPos)
+    {
+        shotTracer.enabled = true;
+        shotTracer.SetPosition(0, spawnTracer.position);
+        shotTracer.SetPosition(1, spawnTracer.position + shotPos);
+        yield return null;
+        shotTracer.enabled = false;
     }
 
     // Server call Player who got shot
