@@ -6,6 +6,7 @@ using UnityEngine.Networking;
 
 public class Player : NetworkBehaviour {
 
+    private bool isFirstSetup = true;
     private Rigidbody rigidbd;
 
     [SerializeField]
@@ -33,32 +34,57 @@ public class Player : NetworkBehaviour {
         protected set { _isDead = value; }
     }
 
-    public void Setup ()
+    public void SetupPlayer ()
     {
-        rigidbd = GetComponent<Rigidbody>();
-        rigidbd.useGravity = true;
-        wasEnabled = new bool[disableOnDeath.Length];
-        for (int i = 0; i < wasEnabled.Length; i++)
+        if (isLocalPlayer)
         {
-            wasEnabled[i] = disableOnDeath[i].enabled;
+            // Switch camera
+            GameController.instance.SetSceneCameraActive(false);
+            //GetComponent<PlayerSetup>().playerUIInstance.SetActive(true);
         }
+
+        CmdBroadcastNewPlayerSetup();
+    }
+
+    [Command]
+    private void CmdBroadcastNewPlayerSetup ()
+    {
+        RpcSetupPlayerOnAllClients();
+    }
+
+    [ClientRpc]
+    private void RpcSetupPlayerOnAllClients ()
+    {
+        if (isFirstSetup)
+        {
+            rigidbd = GetComponent<Rigidbody>();
+            rigidbd.useGravity = true;
+            wasEnabled = new bool[disableOnDeath.Length];
+            for (int i = 0; i < wasEnabled.Length; i++)
+            {
+                wasEnabled[i] = disableOnDeath[i].enabled;
+            }
+
+            isFirstSetup = false;
+        }
+        
 
         SetDefault();
     }
 
     // Update
-    void Update()
-    {
-        if (!isLocalPlayer)
-        {
-            return;
-        }
-        // Suicide
-        if (Input.GetKey(KeyCode.K))
-        {
-            RpcTakeDamage(9999);
-        }
-    }
+    //void Update()
+    //{
+    //    if (!isLocalPlayer)
+    //    {
+    //        return;
+    //    }
+    //    // Suicide
+    //    if (Input.GetKey(KeyCode.K))
+    //    {
+    //        RpcTakeDamage(9999);
+    //    }
+    //}
 
     [ClientRpc]
     public void RpcTakeDamage (int _damage)
@@ -133,12 +159,6 @@ public class Player : NetworkBehaviour {
             _col.enabled = true;
         }
 
-        // Switch camera
-        if (isLocalPlayer)
-        {
-            GameController.instance.SetSceneCameraActive(false);
-        }
-
         // Create spawn effect
         GameObject _gfxIns = Instantiate(spawnEffect, transform.position, Quaternion.identity);
         Destroy(_gfxIns, 4f);
@@ -152,6 +172,9 @@ public class Player : NetworkBehaviour {
         transform.position = _spawnPoint.position;
         transform.rotation = _spawnPoint.rotation;
 
-        SetDefault();
+        yield return new WaitForSeconds(0.1f);
+
+        SetupPlayer();
+        Debug.Log(transform.name + " spawned.");
     }
 }

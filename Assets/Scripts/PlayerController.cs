@@ -6,9 +6,14 @@ public class PlayerController : MonoBehaviour {
 
     [SerializeField]
     private float walkSpeed = 5f;
-
     [SerializeField]
     private float runSpeed = 7f;
+
+    [SerializeField]
+    private float fuelBurnSpeed = 1f;
+    [SerializeField]
+    private float fuelRegenSpeed = 0.25f;
+    private float fuelAmount = 1f;
 
     [SerializeField]
     public Camera cam;
@@ -16,6 +21,12 @@ public class PlayerController : MonoBehaviour {
     private Quaternion targetRotation;
     private float rotationSpeed = 1500f;
     private CharacterController controller;
+
+    // Getter fuel Amount
+    public float GetFuelAmount ()
+    {
+        return fuelAmount;
+    }
 
     void Start ()
     {
@@ -45,15 +56,24 @@ public class PlayerController : MonoBehaviour {
             motion *= 1f;
         }
 
-        // Run
-        if (Input.GetButton("Run"))
+        // Run -> Use FUEL
+        if (Input.GetButton("Run") && fuelAmount > 0)
         {
-            motion *= runSpeed;
+            fuelAmount -= fuelBurnSpeed * Time.deltaTime;
+
+            if (fuelAmount >= 0.01f)
+            {
+                motion *= runSpeed;
+            }
         }
         else // walk
         {
+            fuelAmount += fuelRegenSpeed * Time.deltaTime;
+
             motion *= walkSpeed;
         }
+
+        fuelAmount = Mathf.Clamp(fuelAmount, 0f, 1f);
 
         motion += Vector3.up * -8;
         controller.Move(motion * Time.deltaTime);
