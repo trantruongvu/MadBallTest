@@ -333,6 +333,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85255dc3a5e49e24886405bf30642107, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 100
+  disableOndeath:
+  - {fileID: 114717505910119252}
+  - {fileID: 114745973397910506}
 --- !u!114 &114382240449186446
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -382,7 +386,7 @@ MonoBehaviour:
   barrel: {fileID: 1802219952603586}
   mask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4294966783
   weapon:
     Name: Glock
     Damage: 10

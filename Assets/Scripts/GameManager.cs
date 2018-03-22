@@ -4,6 +4,20 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 
+    // Singleton
+    public static GameManager instance;
+
+    public MatchSetting setting;
+
+    void Awake ()
+    {
+        if (instance != null)
+            Debug.LogError("More than one GameManager");
+        else
+            instance = this;
+    }
+
+    #region Player tracking
     private const string PLAYER_ID_PREFIX = "Player ";
 
     private static Dictionary<string, Player> players = new Dictionary<string, Player>();
@@ -40,4 +54,6 @@ public class GameManager : MonoBehaviour {
     //    GUILayout.EndVertical();
     //    GUILayout.EndArea();
     //}
+
+    #endregion
 }
