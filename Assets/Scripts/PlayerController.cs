@@ -18,10 +18,9 @@ public class PlayerController : MonoBehaviour {
     [SerializeField]
     public Camera cam;
 
-    private Rigidbody rigidbd;
     private Quaternion targetRotation;
     private float rotationSpeed = 1500f;
-    //private CharacterController controller;
+    private CharacterController controller;
 
     // Getter fuel Amount
     public float GetFuelAmount ()
@@ -31,8 +30,7 @@ public class PlayerController : MonoBehaviour {
 
     void Start ()
     {
-        //controller = GetComponent<CharacterController>();
-        rigidbd = GetComponent<Rigidbody>();
+        controller = GetComponent<CharacterController>();
     }
 
     void Update ()
@@ -43,50 +41,42 @@ public class PlayerController : MonoBehaviour {
 
     void InputKeyBoard ()
     {
-        //// Player movement
-        //Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
-        //Vector3 motion = input;
-        //// In case of Pythago
-        //if (Mathf.Abs(input.x) == 1 && Mathf.Abs(input.z) == 1)
-        //{
-        //    motion *= 0.7f;
-        //}
-        //else
-        //{
-        //    motion *= 1f;
-        //}
-        //// Run -> Use FUEL
-        //if (Input.GetButton("Run") && fuelAmount > 0)
-        //{
-        //    fuelAmount -= fuelBurnSpeed * Time.deltaTime;
-        //    if (fuelAmount >= 0.01f)
-        //    {
-        //        motion *= runSpeed;
-        //    }
-        //}
-        //else // walk
-        //{
-        //    fuelAmount += fuelRegenSpeed * Time.deltaTime;
-        //    motion *= walkSpeed;
-        //}
-        //fuelAmount = Mathf.Clamp(fuelAmount, 0f, 1f);
-        //motion += Vector3.up * -8;
-        //controller.Move(motion * Time.deltaTime);
-        Vector3 _velocity = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
-        if (Input.GetButton("Run"))
+        // Player movement
+        Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
+
+        Vector3 motion = input;
+
+        // In case of Pythago
+        if (Mathf.Abs(input.x) == 1 && Mathf.Abs(input.z) == 1)
         {
-            fuelAmount -= fuelBurnSpeed * Time.deltaTime;
-            if (fuelAmount >= 0.01f)
-            {
-                rigidbd.velocity = _velocity *= runSpeed;
-            }
+            motion *= 0.7f;
         }
         else
         {
-            fuelAmount += fuelRegenSpeed * Time.deltaTime;
-            rigidbd.velocity = _velocity *= walkSpeed;
+            motion *= 1f;
         }
+
+        // Run -> Use FUEL
+        if (Input.GetButton("Run") && fuelAmount > 0)
+        {
+            fuelAmount -= fuelBurnSpeed * Time.deltaTime;
+
+            if (fuelAmount >= 0.01f)
+            {
+                motion *= runSpeed;
+            }
+        }
+        else // walk
+        {
+            fuelAmount += fuelRegenSpeed * Time.deltaTime;
+
+            motion *= walkSpeed;
+        }
+
         fuelAmount = Mathf.Clamp(fuelAmount, 0f, 1f);
+
+        motion += Vector3.up * -8;
+        controller.Move(motion * Time.deltaTime);
     }
 
     void InputMouse ()
