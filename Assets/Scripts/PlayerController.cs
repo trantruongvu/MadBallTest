@@ -6,21 +6,18 @@ public class PlayerController : MonoBehaviour {
 
     [SerializeField]
     private float walkSpeed = 5f;
-
     [SerializeField]
     private float runSpeed = 7f;
-
     [SerializeField]
     public Camera cam;
 
+    private Rigidbody rigidbd;
     private Quaternion targetRotation;
     private float rotationSpeed = 1500f;
-    private CharacterController controller;
 
     void Start ()
     {
-        controller = GetComponent<CharacterController>();
-        //cam = Camera.main;
+        rigidbd = GetComponent<Rigidbody>();
     }
 
     void Update ()
@@ -31,33 +28,13 @@ public class PlayerController : MonoBehaviour {
 
     void InputKeyBoard ()
     {
-        // Player movement
-        Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
+        Vector3 _velocity = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
 
-        Vector3 motion = input;
-
-        // In case of Pythago
-        if (Mathf.Abs(input.x) == 1 && Mathf.Abs(input.z) == 1)
-        {
-            motion *= 0.7f;
-        }
-        else
-        {
-            motion *= 1f;
-        }
-
-        // Run
+        // Apply movement
         if (Input.GetButton("Run"))
-        {
-            motion *= runSpeed;
-        }
+            rigidbd.velocity = _velocity *= runSpeed;
         else // walk
-        {
-            motion *= walkSpeed;
-        }
-
-        motion += Vector3.up * -8;
-        controller.Move(motion * Time.deltaTime);
+            rigidbd.velocity = _velocity *= walkSpeed;
     }
 
     void InputMouse ()
