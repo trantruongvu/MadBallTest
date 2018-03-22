@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 124157174042255546}
   - component: {fileID: 81425700493608788}
   - component: {fileID: 114095865577817004}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,8 +40,8 @@ GameObject:
   - component: {fileID: 4079396107013862}
   - component: {fileID: 33555369691625390}
   - component: {fileID: 23959728915535546}
-  m_Layer: 0
-  m_Name: Cube
+  m_Layer: 9
+  m_Name: WeaponHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -56,12 +56,13 @@ GameObject:
   m_Component:
   - component: {fileID: 4580421165360980}
   - component: {fileID: 54313788400399660}
-  - component: {fileID: 114717505910119252}
   - component: {fileID: 114802823966998254}
-  - component: {fileID: 114953302651804600}
   - component: {fileID: 114382240449186446}
   - component: {fileID: 135311837666837688}
-  m_Layer: 0
+  - component: {fileID: 114717505910119252}
+  - component: {fileID: 114953302651804600}
+  - component: {fileID: 114745973397910506}
+  m_Layer: 9
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -78,7 +79,7 @@ GameObject:
   - component: {fileID: 4164783272792304}
   - component: {fileID: 33654338370174270}
   - component: {fileID: 23186838020578364}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: PlayerModel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,7 +94,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4586179606678902}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Graphics
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -355,6 +356,25 @@ MonoBehaviour:
   walkSpeed: 5
   runSpeed: 7
   cam: {fileID: 20685159776963854}
+--- !u!114 &114745973397910506
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1869176615079100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dac552c19493ae046835a40a2f3e9144, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  barrel: {fileID: 1802219952603586}
+  mask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  weapon:
+    Name: Glock
+    Damage: 10
+    Range: 100
 --- !u!114 &114802823966998254
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -402,6 +422,8 @@ MonoBehaviour:
   - {fileID: 114717505910119252}
   - {fileID: 20685159776963854}
   - {fileID: 81425700493608788}
+  - {fileID: 114745973397910506}
+  RemoteLayerName: RemotePlayer
 --- !u!124 &124157174042255546
 Behaviour:
   m_ObjectHideFlags: 1
