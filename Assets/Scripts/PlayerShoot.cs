@@ -41,11 +41,43 @@ public class PlayerShoot : NetworkBehaviour {
         }
     }
 
+    // call on Server when player Shoot
+    [Command]
+    void CmdOnShoot ()
+    {
+        RpcDoShootEffect();
+    }
+
+    // call on all Client to do Shoot Effect
+    [ClientRpc]
+    void RpcDoShootEffect ()
+    {
+        weaponManager.GetCurrentGraphics().muzzleFlash.Play();
+    }
+
+    // call on Server when Hit something
+    [Command]
+    void CmdOnHit (Vector3 _pos, Vector3 _normal)
+    {
+        RpcDoHitEffect(_pos, _normal); 
+    }
+
+    // call on all Client to do Hit Effect
+    [ClientRpc]
+    void RpcDoHitEffect (Vector3 _pos, Vector3 _normal)
+    {
+        GameObject _hitEffect = Instantiate(weaponManager.GetCurrentGraphics().hitEffectPrefab, _pos, Quaternion.LookRotation(_normal));
+        Destroy(_hitEffect, 1f);
+    }
+
     [Client]
     void Shoot()
     {
-        Vector3 forward = muzzlePoint.transform.TransformDirection(Vector3.forward) * 10;
-        Debug.DrawRay(muzzlePoint.transform.position, forward, Color.magenta, 2f);
+        if (!isLocalPlayer)
+            return;
+
+        // When Shoot, call the OnShoot on server
+        CmdOnShoot();
 
         RaycastHit _hit;
         if (Physics.Raycast(muzzlePoint.transform.position, muzzlePoint.transform.forward, out _hit, currentWeapon.Range, mask))
@@ -54,6 +86,9 @@ public class PlayerShoot : NetworkBehaviour {
             {
                 CmdPlayerShot(_hit.collider.name, currentWeapon.Damage);
             }
+
+            // When hit, call the OnHit on server
+            CmdOnHit(_hit.point, _hit.normal);
         }
     }
 
