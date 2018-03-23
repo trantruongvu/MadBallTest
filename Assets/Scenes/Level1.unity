@@ -326,6 +326,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e7f2ba06d5502442a28be7264822222, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  setting:
+    respawnTime: 3
 --- !u!4 &952342307
 Transform:
   m_ObjectHideFlags: 0
@@ -506,7 +508,7 @@ MonoBehaviour:
   m_ScriptCRCCheck: 1
   m_MaxDelay: 0.01
   m_LogLevel: 2
-  m_PlayerPrefab: {fileID: 1869176615079100, guid: ff3bd859bf5a08647a344d947643ad86,
+  m_PlayerPrefab: {fileID: 1070032384899746, guid: ff3bd859bf5a08647a344d947643ad86,
     type: 2}
   m_AutoCreatePlayer: 1
   m_PlayerSpawnMethod: 1
