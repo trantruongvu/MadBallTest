@@ -9,9 +9,6 @@ public class WeaponManager : NetworkBehaviour
     private Transform weaponHolder;
 
     [SerializeField]
-    private string weaponLayerName = "Weapon";
-
-    [SerializeField]
     private PlayerWeapon primaryWeapon;
 
     private PlayerWeapon currentWeapon;

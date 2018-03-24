@@ -527,12 +527,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponHolder: {fileID: 4066330741013566}
-  weaponLayerName: Weapon
   primaryWeapon:
     Name: M4A1
     Damage: 10
     Range: 50
     FireRate: 10
+    firePoint: {fileID: 4787017045438466, guid: b42dd6e375c18cc458b98e4457f26032,
+      type: 2}
     graphics: {fileID: 1828327162440472, guid: b42dd6e375c18cc458b98e4457f26032, type: 2}
 --- !u!114 &114144565065163056
 MonoBehaviour:
@@ -577,7 +578,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_TransformSyncMode: 3
-  m_SendInterval: 0.1
+  m_SendInterval: 0.033333335
   m_SyncRotationAxis: 2
   m_RotationSyncCompression: 0
   m_SyncSpin: 0

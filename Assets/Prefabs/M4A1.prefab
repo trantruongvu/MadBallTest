@@ -362,6 +362,8 @@ MonoBehaviour:
   muzzleFlash: {fileID: 198628520441231262}
   hitEffectPrefab: {fileID: 1313224379817050, guid: 712d329e1fbabaf4fb81969349f98a5c,
     type: 2}
+  bulletTracer: {fileID: 1131899457091932, guid: 84e5a112f28abb14eb2494330142220a,
+    type: 2}
 --- !u!198 &198628520441231262
 ParticleSystem:
   m_ObjectHideFlags: 1

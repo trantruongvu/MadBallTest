@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour {
 
     private Rigidbody rigidbd;
     private Quaternion targetRotation;
-    private float rotationSpeed = 1500f;
+    private float rotationSpeed = 2000f;
 
     void Start ()
     {

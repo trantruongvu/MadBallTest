@@ -13,7 +13,6 @@ public class PlayerShoot : NetworkBehaviour {
     [SerializeField]
     private LayerMask mask;
 
-
     private WeaponManager weaponManager;
     private PlayerWeapon currentWeapon;
 
@@ -53,6 +52,7 @@ public class PlayerShoot : NetworkBehaviour {
     void RpcDoShootEffect ()
     {
         weaponManager.GetCurrentGraphics().muzzleFlash.Play();
+        StartCoroutine(RenderTracer());
     }
 
     // call on Server when Hit something
@@ -79,8 +79,10 @@ public class PlayerShoot : NetworkBehaviour {
         // When Shoot, call the OnShoot on server
         CmdOnShoot();
 
+        Ray ray = new Ray(muzzlePoint.transform.position, muzzlePoint.transform.forward);
         RaycastHit _hit;
-        if (Physics.Raycast(muzzlePoint.transform.position, muzzlePoint.transform.forward, out _hit, currentWeapon.Range, mask))
+
+        if (Physics.Raycast(ray, out _hit, currentWeapon.Range, mask))
         {
             if (_hit.collider.tag == PLAYER_TAG)
             {
@@ -92,11 +94,23 @@ public class PlayerShoot : NetworkBehaviour {
         }
     }
 
+    // When player got Shot
     [Command]
     void CmdPlayerShot (string _ID, int _damage)
     {
         Debug.Log(_ID + " got shot.");
         Player _player = GameManager.GetPlayer(_ID);
         _player.RpcTakeDamage(_damage);
+    }
+
+    // Render bullet tracer
+    IEnumerator RenderTracer()
+    {
+        GameObject _tracerPrefab = weaponManager.GetCurrentGraphics().bulletTracer;
+        _tracerPrefab.transform.position = new Vector3(0, 0, 2.5f);
+        _tracerPrefab.transform.localScale = new Vector3(15, 2, 0);
+        GameObject _shootEffect = Instantiate(_tracerPrefab, muzzlePoint.transform);
+        yield return null;
+        Destroy(_shootEffect);
     }
 }
