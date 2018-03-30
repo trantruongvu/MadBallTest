@@ -551,6 +551,7 @@ MonoBehaviour:
   RemoteLayerName: RemotePlayer
   playerUIPrefab: {fileID: 1773857209168478, guid: 7e029ecd24bd2614880b8b5be43847d4,
     type: 2}
+  playerUIInstance: {fileID: 0}
 --- !u!114 &114161728628106126
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -566,6 +567,13 @@ MonoBehaviour:
   disableOndeath:
   - {fileID: 114873844901554270}
   - {fileID: 114896821478011760}
+  disableGameObjectOndeath:
+  - {fileID: 1229176539396938}
+  - {fileID: 1908567505458402}
+  deathEffect: {fileID: 1510976001094700, guid: a225397e58c18b841ad3d0a3c07614b8,
+    type: 2}
+  spawnEffect: {fileID: 1569492602697522, guid: 537feac73b1b18b40b59234d2379f6cd,
+    type: 2}
 --- !u!114 &114616802508568024
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -655,6 +663,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkSpeed: 5
   runSpeed: 7
+  fuelRegenSpeed: 0.3
+  fuelBurnSpeed: 1
   cam: {fileID: 20453120939821404}
 --- !u!114 &114896821478011760
 MonoBehaviour:
