@@ -532,8 +532,6 @@ MonoBehaviour:
     Damage: 10
     Range: 50
     FireRate: 10
-    firePoint: {fileID: 4787017045438466, guid: b42dd6e375c18cc458b98e4457f26032,
-      type: 2}
     graphics: {fileID: 1828327162440472, guid: b42dd6e375c18cc458b98e4457f26032, type: 2}
 --- !u!114 &114144565065163056
 MonoBehaviour:
@@ -551,6 +549,8 @@ MonoBehaviour:
   - {fileID: 20453120939821404}
   - {fileID: 81515100453481706}
   RemoteLayerName: RemotePlayer
+  playerUIPrefab: {fileID: 1773857209168478, guid: 7e029ecd24bd2614880b8b5be43847d4,
+    type: 2}
 --- !u!114 &114161728628106126
 MonoBehaviour:
   m_ObjectHideFlags: 1
