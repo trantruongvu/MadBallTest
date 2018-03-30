@@ -35,8 +35,9 @@ public class PlayerSetup : NetworkBehaviour {
             if (ui == null)
                 Debug.LogError("No UI");
             ui.SetController(GetComponent<PlayerController>());
+
+            GetComponent<Player>().SetupPlayer();
         }
-        GetComponent<Player>().SetupPlayer();
     }
 
     public override void OnStartClient()
@@ -66,7 +67,8 @@ public class PlayerSetup : NetworkBehaviour {
         Destroy(playerUIInstance);
 
         // Reenable scene camera
-        GameManager.instance.SetSceneCameraActive(true);
+        if (isLocalPlayer)
+            GameManager.instance.SetSceneCameraActive(true);
 
         GameManager.DeRegisterPlayer(transform.name);
     }

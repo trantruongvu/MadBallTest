@@ -4,7 +4,18 @@ using UnityEngine;
 using UnityEngine.Networking;
 
 [RequireComponent(typeof(PlayerSetup))]
-public class Player : NetworkBehaviour {
+public class Player : NetworkBehaviour
+{
+    [SyncVar]
+    private int currentHealth;
+
+    [SyncVar]
+    private bool _isDead = false;
+    public bool isDead
+    {
+        get { return _isDead; }
+        protected set { _isDead = value; }
+    }
 
     [SerializeField]
     private int maxHealth = 100;
@@ -21,34 +32,51 @@ public class Player : NetworkBehaviour {
     [SerializeField]
     private GameObject spawnEffect;
 
-    [SyncVar]
-    private int currentHealth;
+    private bool firstSetup = true;
 
-    [SyncVar]
-    private bool _isDead = false;
-    public bool isDead
-    {
-        get { return _isDead; }
-        protected set { _isDead = value; }
-    }
+    //void Update()
+    //{
+    //    if (!isLocalPlayer)
+    //        return;
 
-    void Update()
-    {
-        if (!isLocalPlayer)
-            return;
+    //    if (Input.GetKeyDown(KeyCode.K))
+    //    {
+    //        RpcTakeDamage(99999);
+    //    }
+    //}
 
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            RpcTakeDamage(99999);
-        }
-    }
 
     public void SetupPlayer()
     {
-        wasEnabled = new bool[disableOndeath.Length];
+        if (isLocalPlayer)
+        {
+            // Switch camera 
+            GameManager.instance.SetSceneCameraActive(false);
+            GetComponent<PlayerSetup>().playerUIInstance.SetActive(true);
+        }
+        
+        CmdBroadCastNewPlayer();
+    }
 
-        for (int i = 0; i < wasEnabled.Length; i++)
-            wasEnabled[i] = disableOndeath[i].enabled;
+
+    [Command]
+    private void CmdBroadCastNewPlayer ()
+    {
+        RpcSetupPlayerOnAllClient();
+    }
+
+    [ClientRpc]
+    private void RpcSetupPlayerOnAllClient ()
+    {
+        if (firstSetup)
+        {
+            wasEnabled = new bool[disableOndeath.Length];
+
+            for (int i = 0; i < wasEnabled.Length; i++)
+                wasEnabled[i] = disableOndeath[i].enabled;
+
+            firstSetup = false;
+        }
 
         SetDefault();
     }
@@ -70,13 +98,6 @@ public class Player : NetworkBehaviour {
         Collider _collider = GetComponent<Collider>();
         if (_collider != null)
             _collider.enabled = true;
-
-        // Switch camera 
-        if (isLocalPlayer)
-        {
-            GameManager.instance.SetSceneCameraActive(false);
-            GetComponent<PlayerSetup>().playerUIInstance.SetActive(true);
-        }
 
         // Spawn effect
         GameObject _effectIns = Instantiate(spawnEffect, transform.position, Quaternion.identity);
@@ -137,7 +158,9 @@ public class Player : NetworkBehaviour {
         transform.position = _spawnPoint.position;
         transform.rotation = _spawnPoint.rotation;
 
-        SetDefault();
-        Debug.Log(transform.name + " iz RES.");
+        yield return new WaitForSeconds(0.1f);
+        SetupPlayer();
+
+        Debug.Log(transform.name + " iz REspawned.");
     }
 }
