@@ -22,5 +22,4 @@ public class BulletTracers : MonoBehaviour {
                 transform.GetChild(i).gameObject.SetActive(false);
         }
     }
-
 }

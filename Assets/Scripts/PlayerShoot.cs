@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.Networking;
 
 [RequireComponent(typeof(WeaponManager))]
-public class PlayerShoot : NetworkBehaviour {
+public class PlayerShoot : NetworkBehaviour
+{
 
     private const string PLAYER_TAG = "Player";
 
@@ -16,12 +17,12 @@ public class PlayerShoot : NetworkBehaviour {
     private WeaponManager weaponManager;
     private PlayerWeapon currentWeapon;
 
-    void Start ()
+    void Start()
     {
         weaponManager = GetComponent<WeaponManager>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         currentWeapon = weaponManager.GetCurrentWeapon();
 
@@ -36,35 +37,36 @@ public class PlayerShoot : NetworkBehaviour {
             if (Input.GetButtonDown("Fire1"))
                 InvokeRepeating("Shoot", 0f, 1f / currentWeapon.FireRate);
             else if (Input.GetButtonUp("Fire1"))
-                CancelInvoke("Shoot"); 
+                CancelInvoke("Shoot");
         }
     }
 
     // call on Server when player Shoot
     [Command]
-    void CmdOnShoot ()
+    void CmdOnShoot()
     {
         RpcDoShootEffect();
     }
 
     // call on all Client to do Shoot Effect
     [ClientRpc]
-    void RpcDoShootEffect ()
+    void RpcDoShootEffect()
     {
         weaponManager.GetCurrentGraphics().muzzleFlash.Play();
-        StartCoroutine(RenderTracer());
+        weaponManager.GetCurrentGraphics().PlayAudioShoot();
+        StartCoroutine(RenderMuzzleFlash());
     }
 
     // call on Server when Hit something
     [Command]
-    void CmdOnHit (Vector3 _pos, Vector3 _normal)
+    void CmdOnHit(Vector3 _pos, Vector3 _normal)
     {
-        RpcDoHitEffect(_pos, _normal); 
+        RpcDoHitEffect(_pos, _normal);
     }
 
     // call on all Client to do Hit Effect
     [ClientRpc]
-    void RpcDoHitEffect (Vector3 _pos, Vector3 _normal)
+    void RpcDoHitEffect(Vector3 _pos, Vector3 _normal)
     {
         GameObject _hitEffect = Instantiate(weaponManager.GetCurrentGraphics().hitEffectPrefab, _pos, Quaternion.LookRotation(_normal));
         Destroy(_hitEffect, 1f);
@@ -75,6 +77,8 @@ public class PlayerShoot : NetworkBehaviour {
     {
         if (!isLocalPlayer)
             return;
+        
+        float shotDistance = currentWeapon.Range;
 
         // When Shoot, call the OnShoot on server
         CmdOnShoot();
@@ -91,20 +95,26 @@ public class PlayerShoot : NetworkBehaviour {
 
             // When hit, call the OnHit on server
             CmdOnHit(_hit.point, _hit.normal);
+
+            // Update tầm bắn
+            shotDistance = _hit.distance;
         }
+
+        // Render tracer
+        weaponManager.GetCurrentGraphics().RenderTracer(ray.direction * shotDistance);
     }
 
     // When player got Shot
     [Command]
-    void CmdPlayerShot (string _ID, int _damage)
+    void CmdPlayerShot(string _ID, int _damage)
     {
         Debug.Log(_ID + " got shot.");
         Player _player = GameManager.GetPlayer(_ID);
         _player.RpcTakeDamage(_damage);
     }
 
-    // Render bullet tracer
-    IEnumerator RenderTracer()
+    // Render muzzle flash
+    IEnumerator RenderMuzzleFlash()
     {
         GameObject _tracerPrefab = weaponManager.GetCurrentGraphics().bulletTracer;
         _tracerPrefab.transform.position = new Vector3(0, 0, 2.5f);
