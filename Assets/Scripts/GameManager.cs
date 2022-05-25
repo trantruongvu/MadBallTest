@@ -19,7 +19,6 @@ public class GameManager : MonoBehaviour {
             instance = this;
     }
 
-
     public void SetSceneCameraActive (bool _isActive)
     {
         if (sceneCamera == null)

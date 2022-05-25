@@ -144,7 +144,6 @@ MonoBehaviour:
   fuelBurnSpeed: 0.5
   cam: {fileID: 20453120939821404}
   playerBody: {fileID: 4061188080319210}
-  playerGraphics: {fileID: 4475216549269532}
   playerBooster: {fileID: 7257756406501598907}
 --- !u!114 &114144565065163056
 MonoBehaviour:
@@ -234,8 +233,8 @@ MonoBehaviour:
   primaryWeapon:
     Name: M4A1
     Damage: 10
-    Range: 50
-    FireRate: 10
+    Range: 25
+    FireRate: 0.1
     graphics: {fileID: 1828327162440472, guid: b42dd6e375c18cc458b98e4457f26032, type: 3}
 --- !u!1 &1229176539396938
 GameObject:
@@ -362,7 +361,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1238380213210758}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!114 &114761674009784404
 MonoBehaviour:
   m_ObjectHideFlags: 0
